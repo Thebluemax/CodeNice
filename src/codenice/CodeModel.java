@@ -22,96 +22,113 @@ import tools.TagMachine;
  */
 public class CodeModel
 {
+
     private String code;
-    private Map<String , String> comments;
+    private Map<String, String> comments;
     private int indexMap = 0;
-    private ArrayList<Integer> position=new ArrayList<>() ;
-    private ArrayList<Integer> positionEnd=new ArrayList<>() ;
-    public void setTextToParse (String t) {
+    private ArrayList<Integer> position = new ArrayList<>();
+    private ArrayList<Integer> positionEnd = new ArrayList<>();
+
+    public void setTextToParse(String t)
+    {
         code = t;
-        comments =new HashMap<String, String>();
+        comments = new HashMap<String, String>();
     }
+
     // Removemos los comentarios para evitar problemas 
-    public void findComments (){
+    public void findComments()
+    {
         String regex = "[//\\*].*+";
-         
+
         Pattern patron = Pattern.compile(regex);
         Matcher emparejador = patron.matcher(code);
         StringBuilder devolver = new StringBuilder();
         while (emparejador.find()) {
-            
-            String key = TagMachine.PREFIX_COMMENT+indexMap;
+
+            String key = TagMachine.PREFIX_COMMENT + indexMap;
             comments.put(key, emparejador.group());
             position.add(emparejador.start());
             positionEnd.add(emparejador.end());
-            
-            
+
             indexMap++;
         }
-        String tempString="";
-        for (int i = comments.size()-1; i >=0 ; i--) {
-            
-                tempString = code.substring(0, position.get(i))+TagMachine.PREFIX_COMMENT+i+code.substring(positionEnd.get(i));
-            
-                code = tempString;
-           
+        String tempString = "";
+        for (int i = comments.size() - 1; i >= 0; i--) {
+
+            tempString = code.substring(0, position.get(i)) + TagMachine.PREFIX_COMMENT + i + code.substring(positionEnd.get(i));
+
+            code = tempString;
+
         }
-         
-        }
- /*
+
+    }
+
+    /*
     Funcion que etiqueta los nombres de los tipos de variable 
-    */
-    public void tagVar (){
-    
-         String[] regex = {"String","int","char","float","double","long","void","boolean","Character","Integer","Boolean"};
-       
-        for (int i=0; i<regex.length;i++) {
-            
-           String newTag =  TagMachine.tagIt("span", regex[i], "#aaaaff","verdana");
-            code = code.replaceAll("\\s"+regex[i]+"\\s"," "+ newTag+" ");
+     */
+    public void tagVar()
+    {
+
+        String[] regex = {"String", "int", "char", "float", "double", "long", "void", "boolean", "Character", "Integer", "Boolean"};
+
+        for (int i = 0; i < regex.length; i++) {
+
+            String newTag = TagMachine.tagIt("span", regex[i], "#aaaaff", "verdana");
+            code = code.replaceAll("\\s" + regex[i] + "\\s", " " + newTag + " ");
         }
-    
+
     }
+
     /*
      Metodo que etiqueta las palabras reservadas
-    */
-     public void tagReserveWords (){
-    
-         String[] regex = {"static","public","protected","private","new","class","import","pakage","if","for","swicht","while","break","case"};
-       
-        for (int i=0; i<regex.length;i++) {
-            
-           String newTag =  TagMachine.tagIt("em", regex[i], "#aaaaff","arial");
-            code = code.replaceAll("\\s"+regex[i]+"\\s"," "+ newTag+" ");
+     */
+    public void tagReserveWords()
+    {
+
+        String[] regex = {"static", "public", "protected", "private", "new", "class", "import", "pakage", "if", "for", "swicht", "while", "break", "case"};
+
+        for (int i = 0; i < regex.length; i++) {
+
+            String newTag = TagMachine.tagIt("em", regex[i], "#aaaaff", "arial");
+            code = code.replaceAll("\\s" + regex[i] + "\\s", " " + newTag + " ");
         }
-    
+
     }
+
     /*
      Metodo que etiqueta las palabras reservadas
-    */ 
-    public void breakTheLine(){
-         code = code.replaceAll(TagMachine.OLD_NEW_LINE,TagMachine.NEW_LINE);
+     */
+    public void breakTheLine()
+    {
+        code = code.replaceAll(TagMachine.OLD_NEW_LINE, TagMachine.NEW_LINE);
     }
+
     // Y div con paddin para darle tabulacion al codigo dentro de los corchetes.
-    public  void divTheBraces(){
-     
-        code = code.replaceAll(TagMachine.TEMPLATE_BRACE_OPEN,TagMachine.tagTheBrace("#333","1%") );
+    public void divTheBraces()
+    {
+
+        code = code.replaceAll(TagMachine.TEMPLATE_BRACE_OPEN, TagMachine.tagTheBrace("#333", "1%"));
         code = code.replaceAll(TagMachine.TEMPLATE_BRACE_CLOSE, TagMachine.TEMPLATE_DIV_TAG_CLOSE);
     }
+
     // Volvemos a escribir los comentarios pero en tags.
-    public void writeTheComments(){
-         for (int i = comments.size()-1; i >=0 ; i--) {
-           String tag =  TagMachine.tagIt("span",comments.get(TagMachine.PREFIX_COMMENT+i), "#aaa", "console")+"<br>";
-            code = code.replace(TagMachine.PREFIX_COMMENT+i,tag );
-          
+    public void writeTheComments()
+    {
+        for (int i = comments.size() - 1; i >= 0; i--) {
+            String tag = TagMachine.tagIt("span", comments.get(TagMachine.PREFIX_COMMENT + i), "#aaa", "console") + "<br>";
+            code = code.replace(TagMachine.PREFIX_COMMENT + i, tag);
+
+        }
     }
-         }
-    public  void MarcTheCode (){
-     code  = TagMachine.tagIt(code, "#ddd", "#000", "arial", "12pt", "1%");
+
+    public void MarcTheCode()
+    {
+        code = TagMachine.tagIt(code, "#ddd", "#000", "arial", "12pt", "1%");
     }
+
     // El codigo.
-    public String getCode() {
-    return  code;
-            }
+    public String getCode()
+    {
+        return code;
     }
-   
+}
