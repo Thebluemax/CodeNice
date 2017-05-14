@@ -46,8 +46,8 @@ public class CodeFrame extends javax.swing.JFrame
         statusLabel = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuConfig = new javax.swing.JMenu();
-        jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        htmlHeader = new javax.swing.JCheckBoxMenuItem();
+        preferencesItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Code.nice();");
@@ -110,12 +110,12 @@ public class CodeFrame extends javax.swing.JFrame
         menuConfig.setText("Configuration");
         menuConfig.setName(""); // NOI18N
 
-        jCheckBoxMenuItem1.setSelected(true);
-        jCheckBoxMenuItem1.setText("HTML header");
-        menuConfig.add(jCheckBoxMenuItem1);
+        htmlHeader.setSelected(true);
+        htmlHeader.setText("HTML header");
+        menuConfig.add(htmlHeader);
 
-        jMenuItem2.setText("Preferences");
-        menuConfig.add(jMenuItem2);
+        preferencesItem.setText("Preferences");
+        menuConfig.add(preferencesItem);
 
         jMenuBar1.add(menuConfig);
 
@@ -157,9 +157,8 @@ public class CodeFrame extends javax.swing.JFrame
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton doIt;
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
+    private javax.swing.JCheckBoxMenuItem htmlHeader;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea javaIn;
@@ -167,6 +166,7 @@ public class CodeFrame extends javax.swing.JFrame
     private javax.swing.JPanel javaPanel;
     private javax.swing.JMenu menuConfig;
     private javax.swing.JButton pasteIt;
+    private javax.swing.JMenuItem preferencesItem;
     private javax.swing.JLabel statusLabel;
     // End of variables declaration//GEN-END:variables
 
@@ -231,6 +231,14 @@ public void setStatus (String t)
     public javax.swing.JMenu getMenuConfig()
     {
         return menuConfig;
+    }
+
+    /**
+     * @return the htmlHeader
+     */
+    public boolean getHtmlHeader()
+    {
+        return htmlHeader.getState();
     }
  
 }
