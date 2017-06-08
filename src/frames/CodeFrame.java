@@ -6,10 +6,9 @@
 *El aviso de copyright anterior y este aviso de permiso tendrán que ser incluidos en todas las copias o partes sustanciales del Software.
 *EL SOFTWARE SE ENTREGA "TAL CUAL", SIN GARANTÍA DE NINGÚN TIPO, YA SEA EXPRESA O IMPLÍCITA, INCLUYENDO, A MODO ENUNCIATIVO, CUALQUIER GARANTÍA DE COMERCIABILIDAD, IDONEIDAD PARA UN FIN PARTICULAR Y NO INFRACCIÓN. EN NINGÚN CASO LOS AUTORES O TITULARES DEL COPYRIGHT INCLUIDOS EN ESTE AVISO SERÁN RESPONSABLES DE NINGUNA rECLAMACIÓN, DAÑOS U OTRAS RESPONSABILIDADES, YA SEA EN UN LITIGIO, AGRAVIO O DE OTRO MODO, RESULTANTES DE O EN CONEXION CON EL SOFTWARE, SU USO U OTRO TIPO DE ACCIONES EN EL SOFTWARE.
  */
-package codenice;
+package frames;
 
 import java.awt.Color;
-import javax.swing.JScrollPane;
 
 /**
  *
@@ -108,13 +107,21 @@ public class CodeFrame extends javax.swing.JFrame
 
         menuConfig.setBackground(new java.awt.Color(55, 60, 55));
         menuConfig.setText("Configuration");
+        menuConfig.setActionCommand("");
         menuConfig.setName(""); // NOI18N
 
-        htmlHeader.setSelected(true);
         htmlHeader.setText("HTML header");
         menuConfig.add(htmlHeader);
 
         preferencesItem.setText("Preferences");
+        preferencesItem.setActionCommand("");
+        preferencesItem.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                preferencesItemMouseClicked(evt);
+            }
+        });
         menuConfig.add(preferencesItem);
 
         jMenuBar1.add(menuConfig);
@@ -136,7 +143,7 @@ public class CodeFrame extends javax.swing.JFrame
                         .addComponent(statusLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(javaPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 9, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -149,11 +156,19 @@ public class CodeFrame extends javax.swing.JFrame
                     .addComponent(doIt)
                     .addComponent(pasteIt)
                     .addComponent(statusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void preferencesItemMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_preferencesItemMouseClicked
+    {//GEN-HEADEREND:event_preferencesItemMouseClicked
+          this.setVisible(false);
+               ConfigurationFrame confFrame = new ConfigurationFrame();
+                confFrame.setVisible(true);
+                System.out.println("codenice.CodeNice.mouseClicked()");
+    }//GEN-LAST:event_preferencesItemMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton doIt;
@@ -201,10 +216,19 @@ public class CodeFrame extends javax.swing.JFrame
     {
         return pasteIt;
     }
-public void setStatus (String t) 
+public void setStatus (String t, int l) 
 {
-    Color color =new Color(60,200,60);
-    System.out.println(color.getRed());
+     Color color = null;
+    switch(l){
+        case 1:
+                 color =new Color(60,200,60);         
+        break;
+         case 2:
+                 color =new Color(200,200,100);         
+        break;
+    }
+   
+   // System.out.println(color.getRed());
     statusLabel.setBackground(color);
     statusLabel.setText(t);
 }
@@ -228,9 +252,9 @@ public void setStatus (String t)
     /**
      * @return the menuConfig
      */
-    public javax.swing.JMenu getMenuConfig()
+    public javax.swing.JMenuItem getMenuConfig()
     {
-        return menuConfig;
+        return preferencesItem;
     }
 
     /**

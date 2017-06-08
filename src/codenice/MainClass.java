@@ -5,6 +5,7 @@
  */
 package codenice;
 
+import frames.CodeFrame;
 import java.awt.EventQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;

@@ -8,13 +8,9 @@
  */
 package codenice;
 
-import com.sun.java.accessibility.util.AWTEventMonitor;
-import java.awt.event.ActionListener;
+import frames.CodeFrame;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.DriverManager;
-import javax.swing.JButton;
-import javax.swing.text.DefaultEditorKit;
 import tools.ClipBoard;
 
 /**
@@ -33,10 +29,12 @@ public class CodeNice extends MouseAdapter
 
     private static final String PAST_IT = "past it";
     private static final String DO_IT = "do it";
-    private static final String CONFIG_MENU = "menu config";
+    public static final String CONFIG_MENU = "menu config";
+    public static final String CLOSE_MENU = "close() ;";
     private ClipBoard clipboard;
-    private CodeFrame view;
+    static private CodeFrame view;
     private CodeModel model;
+    //private ConfigurationFrame confFrame;
 
     public CodeNice(CodeFrame v, CodeModel m)
     {
@@ -48,9 +46,11 @@ public class CodeNice extends MouseAdapter
         v.getDoIt().setName(DO_IT);
         v.getPasteIt().setName(PAST_IT);
         v.getMenuConfig().setName(CONFIG_MENU);
+        v.getMenuConfig();
         v.getDoIt().addMouseListener(this);
         v.getPasteIt().addMouseListener(this);
-        v.getMenuConfig().addMouseListener(this);
+       // v.getMenuConfig().addMouseListener(this);
+       v.getMenuConfig().addActionListener(new MenuActionController());
     }
 
     @Override
@@ -59,30 +59,56 @@ public class CodeNice extends MouseAdapter
 
         // ClipBoard l = new ClipBoard();
         // nice.theCode().
-        //System.out.println(e.getComponent().getName());
-        switch (e.getComponent().getName()) {
+        System.out.println(e.getComponent().getName());
+       
+              switch (e.getComponent().getName()) {
             case DO_IT:
-                String codeToNice = view.getJavaIn().getText();
-                String t = view.getJavaIn().getText();
-                model.setTextToParse(t);
-                model.findComments();
-                model.breakTheLine();
-                model.tagVar();
-                model.tagReserveWords();
-                model.divTheBraces();
-                model.writeTheComments();
-                model.MarcTheCode();
+                 if (!view.getJavaIn().getText().isEmpty()) {
+                     String codeToNice = view.getJavaIn().getText();
+                    String t = view.getJavaIn().getText();
+                    model.setTextToParse(t);
+                    model.findComments();
+                    model.breakTheLine();
+                    model.tagVar();
+                    model.tagReserveWords();
+                    model.divTheBraces();
+                    model.writeTheComments();
+                    model.MarcTheCode();
+                     if (view.getHtmlHeader()) {
+                    
+                    }
+                       } else {
+                         view.setStatus("No hay codigo por etiquetar.",2);
+                        System.out.println(view.getHtmlHeader());   
+                    }
                 view.getJavaOut().setText(model.getCode());
                 clipboard.setText(model.getCode());
-                view.setStatus("El codigo se ha copiado al portapapeles !!");
+                view.setStatus("El codigo se ha copiado al portapapeles !!",1);
+               //PreviewFrame preview = new PreviewFrame(model.getCode());
+               // preview.setVisible(true);
                 break;
           case PAST_IT:
               clipboard.textFromClipboard();
               view.getJavaIn().setText(clipboard.getText());
               break;
-          case CONFIG_MENU:
-              break;
+         // case CONFIG_MENU:
+             //   System.out.println("codenice.CodeNice.mouseClicked()");
+            //  break;
         }
+      
+      
 
+    }
+    /**
+     *
+     */
+    public static void openFrame () {
+        view.setVisible(true);
+    }
+    /**
+     *
+     */
+    public static void closeFrame () {
+        view.setVisible(false);
     }
 }

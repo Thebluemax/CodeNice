@@ -8,7 +8,6 @@
  */
 package codenice;
 
-import java.awt.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,7 +37,7 @@ public class CodeModel
     // Removemos los comentarios para evitar problemas 
     public void findComments()
     {
-        String regex = "[//\\*].*+";
+        String regex = "[//].+";
 
         Pattern patron = Pattern.compile(regex);
         Matcher emparejador = patron.matcher(code);
@@ -73,7 +72,7 @@ public class CodeModel
 
         for (int i = 0; i < regex.length; i++) {
 
-            String newTag = TagMachine.tagIt("span", regex[i], "#aaaaff", "verdana");
+            String newTag = TagMachine.tagIt("span", regex[i], "#aaffaa", "verdana");
             code = code.replaceAll("\\s" + regex[i] + "\\s", " " + newTag + " ");
         }
 
@@ -85,7 +84,7 @@ public class CodeModel
     public void tagReserveWords()
     {
 
-        String[] regex = {"static", "public", "protected", "private", "new", "class", "import", "pakage", "if", "for", "swicht", "while", "break", "case"};
+        String[] regex = {"static", "public", "protected", "private", "new", "class", "import", "pakage", "if", "for", "swicht", "while", "break", "case","return"};
 
         for (int i = 0; i < regex.length; i++) {
 
@@ -115,7 +114,7 @@ public class CodeModel
     public void writeTheComments()
     {
         for (int i = comments.size() - 1; i >= 0; i--) {
-            String tag = TagMachine.tagIt("span", comments.get(TagMachine.PREFIX_COMMENT + i), "#aaa", "console") + "<br>";
+            String tag = TagMachine.tagIt("span", comments.get(TagMachine.PREFIX_COMMENT + i), "#999", "console") + "<br>";
             code = code.replace(TagMachine.PREFIX_COMMENT + i, tag);
 
         }
@@ -123,7 +122,7 @@ public class CodeModel
 
     public void MarcTheCode()
     {
-        code = TagMachine.tagIt(code, "#ddd", "#000", "arial", "12pt", "1%");
+        code = TagMachine.tagIt(code, "#fff", "#000", "arial", "12pt", "1%");
     }
 
     // El codigo.
